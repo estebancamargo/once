@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Bienvenido, {{ session['usuario'] }}</h1>
+        <p>Inicio de sesion correctamente</p>
+        <a href="{{ url_for('Registrar_usuario') }}">Registrar Usuarios</a>
+        <a href="/logout">Cerrar sesión</a>
+        <h1>LISTADO DE USUARIOS</h1>
+        <table>
+            <thead>
+                <th>Codigo:</th>
+                <th>Nombre:</th>
+                <th>Apellido:</th>
+                <th>Email:</th>
+                <th>Direccion:</th>
+                <th>Telefono:</th>
+                <th>Usuario:</th>
+                <th>Acciones:</th>
+            </thead>
+            <tbody>
+                {% for persona in personas %}
+                <tr>
+                    <td>{{ persona['idper'] }}</td>
+                    <td>{{ persona['nombreper'] }}</td>
+                    <td>{{ persona['apellidoper'] }}</td>
+                    <td>{{ persona['emailper'] }}</td>
+                    <td>{{ persona['dirper'] }}</td>
+                    <td>{{ persona['telper'] }}</td>
+                    <td>{{ persona['usuarioper'] }}</td>
+                    <td>
+                        <a href="{{ url_for('editar_usuario', id=persona['idper']) }}">Editar</a>
+                        <form method="POST" action="{{ url_for('eliminar_usuario', id=persona['idper']) }}" style="display: inline;">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="submit" value="Eliminar">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
