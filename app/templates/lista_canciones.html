@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Canciones</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    
+    
+<div class="container">
+    <h1>Bienvenido, {{session['usuario']}} </h1>
+    <p>¡Has iniciado sesión correctamente!</p>
+    <a href="/logout">Cerrar sesión</a>
+    <h1>Canciones</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Portada</th>
+                <th>Título</th>
+                <th>Artista</th>
+                <th>Género</th>
+                <th>Precio</th>
+                <th>Duración</th>
+                <th>Año de Lanzamiento</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+           <!-- {% for cancion in canciones %}
+            <tr>
+                <td><img src="data:image/jpeg;base64,{{ cancion.img }}" alt="Portada de la canción"></td>
+                <td>{{ cancion[1] }}</td>
+                <td>{{ cancion[2] }}</td>
+                <td>{{ cancion[3] }}</td>
+                <td>{{ cancion[4] }}</td>
+                <td>{{ cancion[5] }}</td>
+                <td>{{ cancion[6] }}</td>
+            </tr>
+            {% endfor %}-->
+           <!-- <img src="data:image/jpeg;base64,{{ imagen }}" alt="{{ nombre }}">-->
+            {% for cancion in canciones %}
+            <tr>
+                <td><img src="data:image/jpeg;base64,{{ cancion.img }}" alt="no sale imagen" width="100"></td>
+                <td>{{ cancion.titulo }}</td>
+                <td>{{ cancion.artista }}</td>
+                <td>{{ cancion.genero }}</td>
+                <td>{{ cancion.precio }}</td>
+                <td>{{ cancion.duracion }}</td>
+                <td>{{ cancion.lanzamiento }}</td>
+                <td>
+
+                    <form action="/compras" method="post">
+                        <input type="hidden" name="id_cancion" value="{{ cancion.id }}">
+                        <button type="submit">Agregar al carrito</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
